@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 
 /**
@@ -101,10 +102,13 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ erro: 'E-mail já cadastrado' });
     }
 
+    // FIX: hash da senha antes de salvar
+    const senhaHash = await bcrypt.hash(senha, 10);
+
     const coordenador = new Usuario({
       nome,
       email,
-      senha,
+      senha: senhaHash,
       telefone: telefone || null,
       perfil: 'coordenador'
     });
