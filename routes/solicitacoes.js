@@ -166,7 +166,8 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(atividade);
   } catch (error) {
-    res.status(500).json({ erro: 'Erro ao criar solicitação', detalhe: error.message });
+    console.error('ERRO SOLICITACAO:', error);
+res.status(500).json({ erro: 'Erro ao criar solicitação', detalhe: error.message });
   }
 });
 
